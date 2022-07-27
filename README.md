@@ -1,16 +1,13 @@
 # dayone
 
-A new Flutter project.
+## Documentation
+________________
 
-## Getting Started
+1. Splash Screen
+2. Boarding Screen if you are new user.
+3. Home Page as Guest user
+4. Login or Register.
+5. Login > you are our user.
+6. press logout button
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# complete! see you
