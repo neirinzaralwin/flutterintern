@@ -41,11 +41,18 @@ class _SplashPageState extends State<SplashPage> {
       setState(() {
         isFirstLaunch = 'yes';
       });
-      preference.setString('first_launch', 'yes');
+      // preference.setString('first_launch', 'yes');
     } else {
-      setState(() {
-        isFirstLaunch = 'no';
-      });
+      if (isFirstLaunch == 'yes') {
+        setState(() {
+          isFirstLaunch = 'yes';
+        });
+        preference.setString('first_launch', 'yes');
+      } else if (isFirstLaunch == 'no') {
+        setState(() {
+          isFirstLaunch = 'no';
+        });
+      }
     }
   }
 
