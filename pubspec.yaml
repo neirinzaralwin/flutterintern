@@ -18,6 +18,7 @@ dependencies:
   shared_preferences: ^2.0.15
   introduction_screen: ^3.0.1
   flutter_launcher_icons: "^0.9.2"
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:
@@ -42,6 +43,7 @@ flutter:
     - assets/images/product3.jpeg
     - assets/images/product4.jpeg
     - assets/images/product5.jpeg
+    - assets/icons/
 
   # fonts:
   #   - family: Schyler

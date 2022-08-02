@@ -1,8 +1,8 @@
 import 'package:dayone/screens/home/itemcardwidget.dart';
+import 'package:dayone/screens/login/login_controller.dart';
 import 'package:dayone/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/product.dart';
 
@@ -22,29 +22,7 @@ class _HomePageState extends State<HomePage> {
   ];
 
   var _mySelection;
-  bool isLogin = false;
-
-  @override
-  void initState() {
-    super.initState();
-    checkLogIn();
-  }
-
-  Future<void> checkLogIn() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    bool? value = preferences.getBool('isLogin');
-    if (value == null || value == false) {
-      preferences.setBool('isLogin', false);
-      setState(() {
-        isLogin = false;
-      });
-    } else {
-      setState(() {
-        preferences.setBool('isLogin', true);
-        isLogin = true;
-      });
-    }
-  }
+  final loginController = Get.find<LoginController>();
 
   Future<bool> _onWillPop(BuildContext context) async {
     bool? exitResult = await showDialog(
@@ -75,70 +53,76 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: scaffoldBackgroundColor,
-          title: Padding(
-            padding: const EdgeInsets.only(left: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () async {
-                    if (isLogin == false) {
-                      Get.toNamed('/login');
-                    } else {
-                      SharedPreferences preferences =
-                          await SharedPreferences.getInstance();
-                      preferences.setBool('isLogin', false);
-                      setState(() {
-                        isLogin = !isLogin;
-                      });
-                    }
-                  },
-                  child: Row(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InkWell(
+                onTap: () async {
+                  if (loginController.isLogin.isFalse) {
+                    Get.toNamed('/login');
+                  }
+                  // else {
+                  //   SharedPreferences preferences =
+                  //       await SharedPreferences.getInstance();
+                  //   preferences.setBool('isLogin', false);
+                  //   setState(() {
+                  //     isLogin = !isLogin;
+                  //   });
+                  // }
+                },
+                child: Obx(
+                  () => Row(
                     children: [
-                      const Icon(
-                        Icons.person_rounded,
-                        color: Colors.blue,
-                      ),
+                      loginController.isLogin.isTrue
+                          ? InkWell(
+                              onTap: () {
+                                Get.toNamed('/profile');
+                              },
+                              child: Image.asset(
+                                'assets/icons/profile.png',
+                                width: 40,
+                              ),
+                            )
+                          : Container(),
                       const SizedBox(width: 5),
-                      Text(isLogin ? 'LOG OUT' : 'SIGN IN',
+                      Text(loginController.isLogin.isTrue ? '' : 'SIGN IN',
                           style: const TextStyle(
                               color: Colors.blue, fontSize: 14)),
                     ],
                   ),
                 ),
-                DropdownButton(
-                  items: _myJson.map((item) {
-                    return DropdownMenuItem(
-                      value: item['name'],
-                      child: Row(
-                        children: <Widget>[
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text(item['name'],
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold)),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (newvalue) {
-                    setState(() {
-                      _mySelection = newvalue;
-                    });
-                  },
-                  hint: Text(_myJson[0]["name"],
-                      style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold)),
-                  value: _mySelection,
-                ),
-              ],
-            ),
+              ),
+              DropdownButton(
+                items: _myJson.map((item) {
+                  return DropdownMenuItem(
+                    value: item['name'],
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Text(item['name'],
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+                onChanged: (newvalue) {
+                  setState(() {
+                    _mySelection = newvalue;
+                  });
+                },
+                hint: Text(_myJson[0]["name"],
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold)),
+                value: _mySelection,
+              ),
+            ],
           ),
         ),
         body: Column(

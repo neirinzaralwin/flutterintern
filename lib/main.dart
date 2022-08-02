@@ -1,8 +1,10 @@
+import 'package:dayone/binding_controllers.dart';
 import 'package:dayone/screens/detail/detail_page.dart';
 import 'package:dayone/screens/home/home_page.dart';
 import 'package:dayone/screens/login/login_page.dart';
 import 'package:dayone/screens/onboarding/onboarding_page.dart';
 import 'package:dayone/screens/privacy_policy/privacy_policy_page.dart';
+import 'package:dayone/screens/profile/profile_page.dart';
 import 'package:dayone/screens/register/register_page.dart';
 import 'package:dayone/screens/splash/splash_page.dart';
 import 'package:dayone/utils/colors.dart';
@@ -47,6 +49,7 @@ class _MyAppState extends State<MyApp> {
         scaffoldBackgroundColor: scaffoldBackgroundColor,
       ),
       initialRoute: '/',
+      initialBinding: BindingController(),
       getPages: [
         GetPage(name: '/', page: () => const SplashPage()),
         GetPage(name: '/onboarding', page: () => OnBoardingPage()),
@@ -55,6 +58,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/register', page: () => const RegisterPage()),
         GetPage(name: '/home', page: () => const HomePage()),
         GetPage(name: '/detail', page: () => const DetailPage()),
+        GetPage(name: '/profile', page: () => const ProfilePage()),
       ],
     );
   }
